@@ -22,7 +22,6 @@ tweetTexts = []
 with open('christmas.json') as f:
     for line in f:
     	d = json.loads(line)
-
     	tweetTexts.append(d['tweet_text'])
     	tweets.append(d)
 
@@ -30,10 +29,8 @@ with open('christmas.json') as f:
 stemmer = SnowballStemmer("english")
 
 def tokenize_and_stem(text):
-    # first tokenize by sentence, then by word to ensure that punctuation is caught as it's own token
     tokens = [word for sent in nltk.sent_tokenize(text) for word in nltk.word_tokenize(sent)]
     filtered_tokens = []
-    # filter out any tokens not containing letters (e.g., numeric tokens, raw punctuation)
     for token in tokens:
         if re.search('[a-zA-Z]', token):
             filtered_tokens.append(token)
@@ -43,7 +40,7 @@ def tokenize_and_stem(text):
 
 tfidf_vectorizer = TfidfVectorizer(max_df=0.99, max_features=200000,
                                  min_df=0.01, stop_words='english',
-                                 tokenizer=tokenize_and_stem,
+                                 
                                  use_idf=True, ngram_range=(1,3))
 
 tfidf_matrix = tfidf_vectorizer.fit_transform(tweetTexts) 
@@ -59,13 +56,14 @@ clusters = km.labels_.tolist()
 thefile = open('clustered_tweets.json', 'w')
 
 
-
-
-
 for i in range(len(tweets)):
-	tweetJson = tweets[i]
-	tweetJson['cluster'] = clusters[i]
-	thefile.write("%s\n" % json.dumps(tweetJson))
+    tweetJson = tweets[i]
+    rt = tweetJson['retweet_count']
+    ft = tweetJson['favorite_count']
+    score =  rt + ft
+    tweetJson['score'] = score
+    tweetJson['cluster'] = clusters[i]
+    thefile.write("%s\n" % json.dumps(tweetJson))
 	
 
 
