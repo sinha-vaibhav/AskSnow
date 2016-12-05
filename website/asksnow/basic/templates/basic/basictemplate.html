@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <style>
+  </style>
+    <meta charset="utf-8">
+    <title>AskSnow</title>
+    	<link rel="stylesheet" type="text/css" href="/static/basic/Styles1.css">
+	<link rel="stylesheet" type="text/css" href="/static/basic/css/jqcloud.min.css"/>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/basic/js/jqcloud.min.js"></script>
+	<script type="text/javascript">
+      var word_list = [
+        {text: "Thanks", weight: 13, link: "basic/results?q=Thanks"},
+        {text: "Party", weight: 10.5, link: "basic/results?q=Party"},
+        {text: "December", weight: 9.4, link: "basic/results?q=December"},
+        {text: "Christmas shopping", weight: 6.2,link: "basic/results?q=Christmas shopping"},
+        {text: "just in time for Christmas", weight: 5,link: "basic/results?q=just in time for Christmas"},
+        {text: "Santa Clause", weight: 5,link: "basic/results?q=Santa Clause"},
+        {text: "Love", weight: 5,link: "basic/results?q=Love"},
+        {text: "New", weight: 5,link: "basic/results?q=New"},
+        {text: "Fast Cash", weight: 4,link: "basic/results?q=Fast Cash"},
+        {text: "Holiday Season", weight: 4,link: "basic/results?q=Holiday Season"},
+        {text: "Advent", weight: 3,link: "basic/results?q=Advent"},
+        {text: "Day Count", weight: 3,link: "basic/results?q=Day Count"},
+        {text: "Gifts", weight: 3,link: "basic/results?q=Gifts"},
+        {text: "Sale", weight: 3,link: "basic/results?q=Sale"},
+        {text: "Christmas spirit", weight: 3,link: "basic/results?q=Christmas spirit"},
+        {text: "Christmas Tree", weight: 3,link: "basic/results?q=Christmas Tree"},
+        {text: "1st December", weight: 3,link: "basic/results?q=1st December"},
+        {text: "Win", weight: 2,link: "basic/results?q=Win"},
+      ];
+      $(document).ready(function() {
+        $("#my_favorite_latin_words").jQCloud(word_list);
+      });
+    </script>
+  </head>
+	 <body background="/static/basic/jon-snow-4k.jpg">
+	<h3 style="text-align:center;size:10px;font-family: GameOfThrones;">Ask &nbsp; Snow </h3>
+	 <p style="text-align:center;size:20px;font-family: GameOfThrones;">Christmas &nbsp; is &nbsp; coming!!</p>
+ 	 <br/>
+	 <div style="filter:alpha(opacity=50); text-align:center; opacity:0.5; "> <!-- id="tfheader -->
+		<form  method="post" action="basic/results/">
+		        {{ form }}
+		        <input type="submit" value="Search" class="btn btn-primary">
+            {% csrf_token %}
+		</form>
+	<div class="tfclear"></div>
+	</div>
+
+        <div id="my_favorite_latin_words" style="width: 550px; height: 350px;"></div>
+  </body>
+</html>
