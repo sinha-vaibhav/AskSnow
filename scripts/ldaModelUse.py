@@ -11,8 +11,14 @@ import sys
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 os.chdir("..")
 
-#fname = 'ldaModel.lda'
-fname = 'ldaModel.d2v'
+fname = 'ldaModel.lda'
+#fname = 'ldaModel.d2v'
+
+inputFile = 'clustered_tweets_with_emotion_doc2vec_pos_neg.json'
+outputFile = 'clustered_tweets_with_emotion_lda_pos_neg.json'
+
+outFile = open(outputFile, 'w')
+
 model = gensim.models.ldamodel.LdaModel.load(fname)
 
 def GetDocumentVectors(fileName):
@@ -64,12 +70,28 @@ for i in docVectors:
 
 
 dictionary = corpora.Dictionary(texts)
- 
-print model[dictionary.doc2bow(texts[12345])]
-print docVectors[12345]
-print model.print_topics()
-#print len(texts)
-#print len(texts[0])
+with open(inputFile) as f:
+		i=0
+		for line in f:
+			try:
+				tweet = json.loads(line)
+			except:
+				continue
+			topics = model[dictionary.doc2bow(texts[i])]
+			i += 1
+			maxTopicProb = 0
+			clusterNo = 0
+			for topic in topics:
+				topicNo = topic[0]
+				topicProb = topic[1]
+				if maxTopicProb < topicProb:
+					clusterNo = topicNo
+					maxTopicProb = topicProb
+			tweet['cluster'] = clusterNo
+			outFile.write("%s\n" % json.dumps(tweet))
+
+
+
 
 
 
