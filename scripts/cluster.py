@@ -14,13 +14,20 @@ from sklearn import feature_extraction
 
 
 import os 
+
+
+inputFile = 'emotion_tagged_tweets.json'
+outputFile = 'clustered_tweets_with_emotion_tfidf.json'
 num_clusters = 25
 os.chdir("..")
 tweets = []
 tweetTexts = []
-with open('christmas.json') as f:
+with open(inputFile) as f:
     for line in f:
-    	d = json.loads(line)
+        try:
+            d = json.loads(line)
+        except:
+            continue
     	tweetTexts.append(d['tweet_text'])
     	tweets.append(d)
 
@@ -52,7 +59,7 @@ km.fit(tfidf_matrix)
 
 clusters = km.labels_.tolist()
 
-thefile = open('clustered_tweets.json', 'w')
+thefile = open(outputFile, 'w')
 
 
 for i in range(len(tweets)):

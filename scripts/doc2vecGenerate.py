@@ -49,7 +49,7 @@ testEmos = emo[4000:,:]
 docVectors = docVectors[:4000,:]
 emo = emo[:4000,:]
 
-learning_rate = 0.1
+learning_rate = 0.01
 training_epochs = 100
 display_step = 1
 
@@ -122,11 +122,15 @@ with tf.Session() as sess:
     print("Train Accuracy:", accuracy.eval({x: docVectors, y: emo}))
     print("Test Accuracy:", accuracy.eval({x: testDocs, y: testEmos}))
 
-thefile = open('emotion_tagged_tweets.json', 'w')
+
 emotion = {0:'anger',1:'joy',2:'fear',3:'sadness',4:'disgust'}
 init = tf.initialize_all_variables()
 mainDocVectors = []
-with open('ChristmasClean.json') as f:
+
+readFile = 'clustered_tweets.json'
+outFile = open('emotion_tagged_tweets_clustered_tfidf.json', 'w')
+
+with open(readFile) as f:
 	for line in f:
 		tweet = json.loads(line)
 		tweetText = json.dumps(tweet['tweet_text'])
@@ -144,13 +148,13 @@ with tf.Session() as sess:
 	feed_dict = {x: mainDocVectors}
 	classification = sess.run(multilayer_perceptron(x, weights, biases), feed_dict)
 	i=0
-	with open('ChristmasClean.json') as f:
+	with open(readFile) as f:
 		for line in f:
 			tweet = json.loads(line)
 			result = numpy.argmax(numpy.array(classification[i]))
 			i+=1
 			tweet["emotion"] = emotion[result]
-			thefile.write("%s\n" % json.dumps(tweet))
+			outFile.write("%s\n" % json.dumps(tweet))
 
 
 
