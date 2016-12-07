@@ -33,6 +33,7 @@ def GetDocumentVectors(fileName):
 
 docVectors=GetDocumentVectors('ChristmasClean.json')
 
+
 tokenizer = RegexpTokenizer(r'\w+')
 
 
@@ -55,6 +56,7 @@ for i in docVectors:
     
 
     stemmed_tokens = [p_stemmer.stem(i) for i in stopped_tokens]
+
     
     
     texts.append(stemmed_tokens)
