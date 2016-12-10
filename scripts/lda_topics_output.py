@@ -21,13 +21,15 @@ outFile = open(outputFile, 'w')
 
 model = gensim.models.ldamodel.LdaModel.load(fname)
 
+print model.print_topics()
+
 topicDict = {}
 
 for i in range(20):
 	topic = model.print_topic(i)
 	topicDict[i] = topic
 
-outFile.write(str(topicDict))
+#outFile.write(str(topicDict))
  
 
 

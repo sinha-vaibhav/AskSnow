@@ -6,14 +6,15 @@ import json
 
 sid = SentimentIntensityAnalyzer()
 
-ss = sid.polarity_scores('hello, I am not fine')
+ss = sid.polarity_scores('hello, I am  fine')
+print ss
 
 os.chdir("..")
 
 inputFile = 'clustered_tweets_with_emotion_doc2vec.json'
 outputFile = 'clustered_tweets_with_emotion_doc2vec_pos_neg.json'
 
-outFile = open(outputFile, 'w')
+"""outFile = open(outputFile, 'w')
 with open(inputFile) as f:
 	for line in f:
 		tweet = json.loads(line)
@@ -29,7 +30,7 @@ with open(inputFile) as f:
 		
 		polarity = sid.polarity_scores(tweetTextFiltered)
 		tweet['sentiment'] = polarity
-		outFile.write("%s\n" % json.dumps(tweet))
+		outFile.write("%s\n" % json.dumps(tweet))"""
 
 
 
